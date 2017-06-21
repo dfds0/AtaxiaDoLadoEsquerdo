@@ -37,3 +37,4 @@ O que precisa ser feito:
   
   100% de tradução das declarações definidas
   
+-- 
