@@ -11,7 +11,7 @@ class RBS extends AbstractRunner {
 
         abstractReader = new GroovyReader()
 
-        File folder = new File("/Users/diegio/checkerboard-OCTB/src/checkerboard/grails-app/")
+        File folder = new File("")
 
         explore(folder)
         folder.listFiles().each {
