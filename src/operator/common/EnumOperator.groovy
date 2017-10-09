@@ -23,7 +23,7 @@ class EnumOperator extends GenericOperator  {
         enumStatement.name = line.split(' ').first()
 
         // TODO read the scope of Enum
-        classStatement.internalEnum.add(enumStatement)
+        classStatement.internalEnumerations.add(enumStatement)
     }
 
     boolean isValid(String line) {

@@ -13,7 +13,10 @@ class FunctionStatement {
 
     List<ArgumentStatement> arguments
 
+    List<String> exceptions
+
     public FunctionStatement() {
         this.arguments = []
+        this.exceptions = []
     }
 }

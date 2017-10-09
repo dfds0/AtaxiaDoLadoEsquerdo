@@ -4,6 +4,8 @@ package statement
  */
 class PropertyStatement {
 
+    ClassStatement classStatement
+
     String name
     String type
     String visibility
@@ -63,4 +65,61 @@ class PropertyStatement {
 
         }
     }
+
+    /**
+     * Check if the type of property is String
+     * @return True if the type is String
+     */
+    public boolean getIsStringType() {
+        return this.type == 'String'
+    }
+
+    public boolean getIsObjectType() {
+        String firstChar = this.type.substring(0, 1)
+
+        // Object don't star with a lower char
+        if (firstChar == firstChar.toLowerCase()) {
+            return false
+        }
+
+        List<String> primitiveObject = ['Long', 'long', 'Integer', 'int', 'Double', 'double', 'Boolean', 'boolean', 'String']
+        if (primitiveObject.contains(this.type)) {
+            return false
+        }
+
+        // Array of object is primitive
+        if (this.type.contains('[]')) {
+            return false
+        }
+
+        return true
+    }
+
+    public boolean getIsDateType() {
+        return this.type == 'Date'
+    }
+
+    public boolean getIsHashMapType() {
+        String radical = this.type.split('<')[0]
+        return radical == 'Map' || radical == 'HashMap'
+    }
+
+    public boolean getIsListType() {
+        String radical = this.type.split('<')[0]
+        return radical == 'List' || radical == 'ArrayList'
+    }
+
+    public boolean getIsSetType() {
+        String radical = this.type.split('<')[0]
+        return radical == 'Set' || radical == 'HashSet'
+    }
+
+    public boolean getIsBooleanType() {
+        return this.type == 'boolean' || this.type == 'Boolean'
+    }
+
+    public boolean getIsEnumType() {
+        return this.classStatement.internalEnumerations.find {it.name == this.type } != null
+    }
+
 }

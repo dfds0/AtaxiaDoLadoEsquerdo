@@ -5,9 +5,11 @@ import operator.common.AnnotationOperator
 import operator.file.CommentOperator
 import operator.file.DeclarationOperator
 import operator.file.ScopeOperation
+import statement.ClassStatement
 
 class GroovyReader {
 
+    List<ClassStatement> classStatements = []
     private List<GenericOperator> operators = []
 
     GenericOperator lastOperator
@@ -29,6 +31,7 @@ class GroovyReader {
             line = dirtyLine.trim()
 
             if (!line.empty) {
+
                 operator = findOperator(line)
 
                 if (operator && !operator.lines.empty) {
@@ -43,46 +46,7 @@ class GroovyReader {
         donutOperator.operators = operators
         donutOperator.recap()
 
-        println ''
-        println donutOperator.classStatement.name
-
-        donutOperator.classStatement.imports.each {
-            println '   import: ' + it
-        }
-
-        if (donutOperator.classStatement.extendsClass) {
-            println '   extend: ' + donutOperator.classStatement.extendsClass.name
-        }
-
-        donutOperator.classStatement.implementsInterfaces.each {
-            println '   implements: ' + it.name
-        }
-
-        donutOperator.classStatement.internalEnum.each {
-            println '   enum: ' + it.name
-        }
-
-        donutOperator.classStatement.properties.each {
-            println '   ' + it.type + ' ' + it.name + (it.isBelongsTo ? ' (BelongsTo) ' : '') +
-                    (it.isHasMany ? ' (HasMany) ' : '') + (it.isHasOne ? ' (HasOne) ' : '') + (it.isTransient ? ' (Transient) ' : '')
-        }
-
-        donutOperator.classStatement.functions.each {
-            println '   -F: ' + it.type + ' ' + it.name + (it.isStatic ? ' (static) ' : '')
-            it.arguments.each { arg ->
-                println '       -- ' + arg.name
-            }
-        }
-
-        donutOperator.classStatement.closures.each {
-            if (it.isAnonymous) {
-                println '   -C: anonymous closure ' + (it.isStatic ? ' (static) ' : '')
-            } else {
-                println '   -C: ' + it.type + ' ' + it.name
-            }
-        }
-
-        println ''
+        this.classStatements.add(donutOperator.classStatement)
     }
 
     public GenericOperator findOperator(String line) {

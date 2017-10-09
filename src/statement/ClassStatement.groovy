@@ -14,8 +14,8 @@ class ClassStatement {
     ClassStatement extendsClass
     List<InterfaceStatement> implementsInterfaces
     
-    List<ClassStatement> internalClass
-    List<EnumStatement> internalEnum
+    List<ClassStatement> internalClasses
+    List<EnumStatement> internalEnumerations
 
     List<FunctionStatement> constructors
     List<PropertyStatement> properties
@@ -33,8 +33,8 @@ class ClassStatement {
 
         this.extendsClass = null
         this.implementsInterfaces = []
-        this.internalClass = []
-        this.internalEnum = []
+        this.internalClasses = []
+        this.internalEnumerations = []
 
         this.constructors = []
         this.properties = []
@@ -52,9 +52,46 @@ class ClassStatement {
             propertyStatement.type = type
 
             this.propertiesAsMap[name] = propertyStatement
+
+            // Link entities
             this.properties.add(propertyStatement)
+            propertyStatement.classStatement = this
         }
 
         return propertyStatement
     }
+
+    /**
+     * Return the instance name of class
+     * @return String value that represent the instance name of class
+     */
+    public String getInstanceName() {
+        return name[0]?.toLowerCase() + name[1..-1]
+    }
+
+    /**
+     * Return a property that can work as ID of entity
+     * @return PropertyStatement instance case exist a Main Property
+     */
+    public PropertyStatement getMainProperty() {
+        PropertyStatement mainProperty = null
+
+        for (PropertyStatement propertyStatement : properties) {
+            if (propertyStatement.name == 'name') {
+                mainProperty = propertyStatement
+                break
+
+            } else if (propertyStatement.name == 'username') {
+                mainProperty = propertyStatement
+                break
+
+            } else if (propertyStatement.isUnique && propertyStatement.isStringType) {
+                mainProperty = propertyStatement
+                break
+            }
+        }
+
+        return mainProperty
+    }
+
 }

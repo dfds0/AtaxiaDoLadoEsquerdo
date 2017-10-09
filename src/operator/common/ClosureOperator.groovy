@@ -51,7 +51,6 @@ class ClosureOperator extends GenericOperator {
 
         ArgumentStatement argumentStatement
 
-        println loadStatements()
         tokens = splitByComma(arguments)
         tokens.each { String argument ->
             argumentStatement = ArgumentStatement.build(argument)
@@ -99,7 +98,9 @@ class ClosureOperator extends GenericOperator {
         // Closure as: 'name,{...}' - valid
         // Closure as: 'name(...){...}' - invalid
         // Closure as: 'name(...) {...}' - invalid
-        if (previousChar == ')') {
+        // Closure as: 'void name ...' - invalid
+        // Closure as: 'name ... throws {' - invalid
+        if (previousChar == ')' || line.contains('void ') || line.contains('throws ') || line.contains('="') || line.contains('= "')) {
             return false
         }
 

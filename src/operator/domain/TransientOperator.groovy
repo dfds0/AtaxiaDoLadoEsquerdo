@@ -54,8 +54,12 @@ class TransientOperator extends PropertyOperator {
         originalProperty = classStatement.propertiesAsMap[propertyStatement.name]
         if (originalProperty) {
             originalProperty.isTransient = propertyStatement.isTransient
+
         } else {
+            // Link entities
             classStatement.properties.add(propertyStatement)
+            propertyStatement.classStatement = classStatement
+
             classStatement.propertiesAsMap.put(propertyStatement.name, propertyStatement)
         }
 

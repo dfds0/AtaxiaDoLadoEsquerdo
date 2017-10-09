@@ -70,7 +70,7 @@ class ClassOperator extends GenericOperator  {
     }
 
     boolean isValid(String line) {
-        return line.startsWith('class') || line.startsWith('public class') || line.startsWith('private class')
+        return line.startsWith('class') || line.startsWith('public class') || line.startsWith('private class') || line.startsWith('abstract class')
     }
 
 

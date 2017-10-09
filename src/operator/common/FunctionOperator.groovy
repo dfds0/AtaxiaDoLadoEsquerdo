@@ -16,6 +16,7 @@ class FunctionOperator extends GenericOperator  {
 
     void updateStatement(ClassStatement classStatement) {
         List<String> tokens
+
         String line = loadScopeDeclaration()
 
         FunctionStatement functionStatement = new FunctionStatement()
@@ -37,6 +38,15 @@ class FunctionOperator extends GenericOperator  {
             functionStatement.isStatic = true
         }
 
+        if (line.contains('throws')) {
+            tokens = line.split('throws ')
+            line = tokens[0]
+            tokens[1].split(',').each {String exception
+                functionStatement.exceptions.add(exception.trim())
+            }
+
+        }
+
         // 'def function(arg)' -> 'def function(arg'
         int lastClose = line.lastIndexOf(')')
         int firstOpen = line.indexOf('(')
@@ -49,19 +59,30 @@ class FunctionOperator extends GenericOperator  {
 
         tokens = splitByComma(arguments)
         tokens.each { String argument ->
-            argumentStatement = ArgumentStatement.build(argument)
+            argumentStatement = ArgumentStatement.build(argument.trim())
             functionStatement.arguments.add(argumentStatement)
         }
 
-        // TODO - WRONG this will not true every time
         int lastSpace = line.lastIndexOf(' ')
-        // 'def function' -> 'function'
-        functionStatement.name = line.substring(lastSpace).trim()
-        // 'def function' -> 'def'
-        functionStatement.type = line.substring(0, lastSpace).trim()
-        
+        if (lastSpace == -1) {
+            // function without return type defined
+            functionStatement.name = line.trim()
+        } else {
+            // 'def function' -> 'function'
+            functionStatement.name = line.substring(lastSpace).trim()
+            // 'def function' -> 'def'
+            functionStatement.type = line.substring(0, lastSpace).trim()
+        }
+
         // functionStatement.lines = this.lines -> recall
-        classStatement.functions.add(functionStatement)
+
+        if (functionStatement.name == classStatement.name) {
+            classStatement.constructors.add(functionStatement)
+
+        } else {
+            classStatement.functions.add(functionStatement)
+        }
+
     }
 
     boolean isValid(String line) {
@@ -86,6 +107,8 @@ class FunctionOperator extends GenericOperator  {
         // Closure as: 'name,{...}' - invalid
         // Closure as: 'name(...){...}' - valid
         // Closure as: 'name(...) {...}' - valid
+        // Closure as: 'void name ...' - valid
+        // Closure as: 'name ... throws {' - valid
         if (previousChar != ')') {
             return false
         }

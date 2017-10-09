@@ -13,8 +13,10 @@ class ClosureStatement {
     boolean isAnonymous
 
     List<ArgumentStatement> arguments
+    List<String> exceptions
 
     public ClosureStatement() {
         this.arguments = []
+        this.exceptions = []
     }
 }

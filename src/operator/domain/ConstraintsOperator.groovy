@@ -45,10 +45,20 @@ class ConstraintsOperator extends ClosureOperator {
             // 'name validator: { ... }' -> 'name validator:{ ... }'
             line = line.replace(': {', ':{')
 
+            // TODO
             int firstScopeOpen = line.indexOf(':{')
             if (firstScopeOpen != -1) {
                 scopeCode = line.substring(firstScopeOpen+1)
                 line = line.substring(0, firstScopeOpen+1) + '##SCOPE##'
+            } else {
+                scopeCode = null
+            }
+
+            // TODO
+            int firstArrayOpen = line.indexOf('[')
+            if (firstArrayOpen != -1) {
+                scopeCode = line.substring(firstArrayOpen+1)
+                line = line.substring(0, firstArrayOpen+1) + '##ARRAY##'
             } else {
                 scopeCode = null
             }

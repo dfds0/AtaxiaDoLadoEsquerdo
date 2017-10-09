@@ -9,10 +9,16 @@ class ArgumentStatement {
     String type
     String visibility
     String defaultValue
+    boolean isFinal
 
     public static ArgumentStatement build(String line) {
         ArgumentStatement argumentStatement = new ArgumentStatement()
         List<String> tokens
+
+        if (line.contains('final ')) {
+            argumentStatement.isFinal = true
+            line = line.replace('final ', '')
+        }
 
         if (line.contains('=')) {
             tokens = line.split('=')
