@@ -10,6 +10,7 @@ class FunctionStatement {
     String visibility
     boolean isAbstract
     boolean isStatic
+    boolean isDefault
 
     List<ArgumentStatement> arguments
 

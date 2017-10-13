@@ -87,8 +87,6 @@ class ClosureOperator extends GenericOperator {
             return false
         }
 
-        char previousChar = closureLine.charAt(closureIndex - 1)
-
         // Closure as: 'name: {...}' - valid
         // Closure as: 'name = {...}' - valid
         // Closure as: 'name ={...}' - valid
@@ -100,7 +98,8 @@ class ClosureOperator extends GenericOperator {
         // Closure as: 'name(...) {...}' - invalid
         // Closure as: 'void name ...' - invalid
         // Closure as: 'name ... throws {' - invalid
-        if (previousChar == ')' || line.contains('void ') || line.contains('throws ') || line.contains('="') || line.contains('= "')) {
+        if ((closureLine.indexOf('(') < closureLine.indexOf('{')) || line.contains('void ')
+                || line.contains('throws ') || line.contains('="') || line.contains('= "')) {
             return false
         }
 

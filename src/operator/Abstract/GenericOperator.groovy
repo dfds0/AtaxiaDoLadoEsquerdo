@@ -36,7 +36,15 @@ abstract class GenericOperator {
 
             line += ' ' + bufferLine
             linesToRemove++
-            if (bufferLine.contains('{')) {
+
+            // name() { == true
+            // name( arg1 = new Obj(), arg2 = new Obje() ) { == true
+            // Declaration as: 'name() {' - valid
+            // Declaration as: 'name( arg1, arg2 ) {' - valid
+            // Declaration as: 'name( {}, {} ) {' - valid
+            // Declaration as: 'name() { return 1 }' - valid
+
+            if (bufferLine.count('(') == bufferLine.count(')') && bufferLine.count('{') == (bufferLine.count('}') + 1)) {
                 break
             }
 
