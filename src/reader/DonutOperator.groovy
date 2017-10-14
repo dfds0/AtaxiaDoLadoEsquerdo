@@ -99,7 +99,14 @@ class DonutOperator {
                 genericOperator = findOperator(line, operations)
 
                 if (genericOperator) {
-                    genericOperator.updateStatement(classStatement)
+                    try {
+                        genericOperator.updateStatement(classStatement)
+                    } catch (Exception e) {
+                        e.printStackTrace()
+                        println '??????? ' + line
+
+                    }
+
                 }
             }
 

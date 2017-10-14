@@ -122,4 +122,12 @@ class PropertyStatement {
         return this.classStatement.internalEnumerations.find {it.name == this.type } != null
     }
 
+    public boolean getIsDataSource() {
+        return this.name == 'dataSource'
+    }
+
+    public boolean getIsGrailsApplication() {
+        return this.name == 'grailsApplication'
+    }
+
 }

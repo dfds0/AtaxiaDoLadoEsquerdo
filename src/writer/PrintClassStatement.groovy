@@ -36,7 +36,7 @@ class PrintClassStatement {
         classStatement.functions.each {
             println '   -F: ' + it.type + ' ' + it.name + (it.isStatic ? ' (static) ' : '')
             it.arguments.each { arg ->
-                println '       -- ' + arg.name
+                println '       -- ' + arg.name + ' = ' + arg.defaultValue
             }
         }
 

@@ -66,12 +66,16 @@ class GroovyReader {
 
         } else {
 
+            println 'Current line : ' + line
             for (GenericOperator operator in operators) {
                 if (operator.isValid(line)) {
 
                     if (operator.needBuffer(line)) {
                         lastOperator = operator.build()
                         lastOperator.lines.add(line)
+
+                        println '   --- ' + lastOperator.class.name + ' ' + line
+
                         operatorFound = null
 
                     } else {

@@ -38,13 +38,17 @@ class FunctionOperator extends GenericOperator  {
             functionStatement.isStatic = true
         }
 
+        if (line.contains('default ')) {
+            line = line.replace('default ', '').trim()
+            functionStatement.isDefault = true
+        }
+
         if (line.contains('throws')) {
             tokens = line.split('throws ')
             line = tokens[0]
             tokens[1].split(',').each {String exception
                 functionStatement.exceptions.add(exception.trim())
             }
-
         }
 
         // 'def function(arg)' -> 'def function(arg'
@@ -96,8 +100,6 @@ class FunctionOperator extends GenericOperator  {
             return false
         }
 
-        char previousChar = closureLine.charAt(closureIndex -1)
-
         // Closure as: 'name: {...}' - invalid
         // Closure as: 'name = {...}' - invalid
         // Closure as: 'name ={...}' - invalid
@@ -109,7 +111,8 @@ class FunctionOperator extends GenericOperator  {
         // Closure as: 'name(...) {...}' - valid
         // Closure as: 'void name ...' - valid
         // Closure as: 'name ... throws {' - valid
-        if (previousChar != ')') {
+
+        if ((closureLine.indexOf('(') > closureLine.indexOf('{'))) {
             return false
         }
 

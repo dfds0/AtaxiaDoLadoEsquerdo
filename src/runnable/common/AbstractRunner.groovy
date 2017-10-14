@@ -16,7 +16,7 @@ abstract class AbstractRunner implements Runnable {
 
         } else {
 
-            if (file.name.contains('AbstractController.groovy') && !readerFiles.contains(file.name)) {
+            if (file.name.contains('.groovy') && !readerFiles.contains(file.name) && file.exists()) {
                 try {
                     abstractReader.read(file)
                     readerFiles.add(file.name)
