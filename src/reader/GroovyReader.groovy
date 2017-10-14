@@ -2,6 +2,7 @@ package reader
 
 import operator.Abstract.GenericOperator
 import operator.common.AnnotationOperator
+import operator.common.LoadOperator
 import operator.file.CommentOperator
 import operator.file.DeclarationOperator
 import operator.file.ScopeOperation
@@ -17,6 +18,7 @@ class GroovyReader {
     GroovyReader() {
         operators.add(new AnnotationOperator())
         operators.add(new CommentOperator())
+        operators.add(new LoadOperator())
         operators.add(new DeclarationOperator())
         operators.add(new ScopeOperation())
     }
@@ -73,9 +75,6 @@ class GroovyReader {
                     if (operator.needBuffer(line)) {
                         lastOperator = operator.build()
                         lastOperator.lines.add(line)
-
-                        println '   --- ' + lastOperator.class.name + ' ' + line
-
                         operatorFound = null
 
                     } else {

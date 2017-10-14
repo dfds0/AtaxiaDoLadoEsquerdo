@@ -7,10 +7,10 @@ import statement.EnumStatement
 /**
  * Created by dfds on 9/30/17.
  */
-class EnumOperator extends GenericOperator  {
+class AvoidOperator extends GenericOperator  {
 
     GenericOperator build() {
-        return new EnumOperator()
+        return new AvoidOperator()
     }
 
     void updateStatement(ClassStatement classStatement) {

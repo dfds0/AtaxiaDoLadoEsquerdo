@@ -11,6 +11,7 @@ class FunctionStatement {
     boolean isAbstract
     boolean isStatic
     boolean isDefault
+    boolean isFinal
 
     List<ArgumentStatement> arguments
 
