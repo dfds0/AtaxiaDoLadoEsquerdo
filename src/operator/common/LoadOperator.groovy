@@ -42,7 +42,13 @@ class LoadOperator extends GenericOperator  {
         boolean arrayTest = line.count('[') != line.count(']')
         boolean mapTest = false // line.count('<') != (line.count('>') - line.count('->'))
 
-        return closureTest || functionTest || arrayTest || mapTest || compressLine(line).empty
+
+        String trimLine = line.trim()
+        boolean endWithDot = trimLine.endsWith('.')
+        boolean endWithPlus = trimLine.endsWith('+')
+        boolean endWithComma = trimLine.endsWith(',')
+
+        return closureTest || functionTest || arrayTest || mapTest ||endWithComma || endWithPlus || endWithDot || compressLine(line).empty
     }
 
     void updateStatement(ClassStatement classStatement) {

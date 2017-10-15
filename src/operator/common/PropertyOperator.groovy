@@ -18,11 +18,11 @@ class PropertyOperator extends GenericOperator {
         PropertyStatement propertyStatement = new PropertyStatement()
         PropertyStatement originalProperty
         List<String> tokens
-        String line = this.lines.first()
+        String line = this.lines.join('')
 
         ['public ', 'private ', 'protected '].each { String token ->
             if (line.contains(token)) {
-                propertyStatement.visibility = token
+                propertyStatement.visibility = token.trim()
                 line = line.replace(token, '')
             }
         }
@@ -37,16 +37,30 @@ class PropertyOperator extends GenericOperator {
             propertyStatement.isFinal = true
         }
 
+        if (line.contains('transient ')) {
+            line = line.replace('transient ', '').trim()
+            propertyStatement.isTransient = true
+        }
+
+        if (line.contains('def ')) {
+            line = line.replace('def ', '').trim()
+            propertyStatement.type = 'def'
+        }
+
         if (line.contains('=')) {
             // TODO need work with Map<Object, Object>
             tokens = line.split('=')
             line = tokens[0]
-            propertyStatement.defaultValue = tokens[1]
+            propertyStatement.defaultValue = tokens[1].trim()
         }
 
         tokens = line.trim().split(' ')
-        propertyStatement.type = tokens[0]
-        propertyStatement.name = tokens[1]
+        if (tokens.size() == 2) {
+            propertyStatement.type = tokens[0]
+            propertyStatement.name = tokens[1]
+        } else {
+            propertyStatement.name = line.trim()
+        }
 
         originalProperty = classStatement.propertiesAsMap[propertyStatement.name]
         if (originalProperty) {

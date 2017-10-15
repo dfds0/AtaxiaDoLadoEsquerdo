@@ -4,84 +4,84 @@ package simulation
  */
 class SimulationClass {
 
-//    def propertyDef
-//    String propertyString
-//
-//    public publicNotTypeDef
-//    private privateNotTypeDef
-//
-//    public String publicString
-//    private String privateString
-//
-//    // Constructor
-//
-//    public SimulationClass() {
-//        this.propertyDef = 'value'
-//    }
-//
-//    private SimulationClass(String argument) {
-//        this.propertyDef = 'value'
-//    }
-//
-//    // Functions
-//
-//    public void publicVoidFunction() {
-//        this.propertyDef = 'value'
-//    }
-//
-//    private void privateVoidFunction() {
-//        this.propertyDef = 'value'
-//    }
-//
-//    // Functions as Set/Get
-//
-//    public void setFakeProperty(String value) {
-//        this.privateString = value
-//    }
-//
-//    public String getFakeProperty() {
-//        return this.privateString
-//    }
-//
-//    // Functions with term omitted
-//
-//    public functionWithoutReturn() {
-//        return this.propertyDef
-//    }
-//
-//    def functionWithoutScope() {
-//        return this.propertyDef
-//    }
-//
-//    // Function static
-//
-//    static functionStatic() {
-//        return 'value'
-//    }
-//
-//    // Function with multiple arguments
-//
-//    public functionMultipleArguments(String argument1, String argument2) {
-//        return 'value'
-//    }
-//
-//    // Function with arguments type omitted
-//
-//    public functionMultipleArgumentsOmitted(argument1, argument2) {
-//        return 'value'
-//    }
-//
-//    // Function with arguments using default value
-//
-//    public functionArgumentWithDefaultValue(String argument1, String argument2 = 'value') {
-//        return 'value'
-//    }
-//
-//    // Function with arguments using default value as object
-//
-//    public functionArgumentWithDefaultValueAsObject(argument = new Object()) {
-//        return 'value'
-//    }
+    def propertyDef
+    String propertyString
+
+    public publicNotTypeDef
+    private privateNotTypeDef
+
+    public String publicString
+    private String privateString
+
+    // Constructor
+
+    public SimulationClass() {
+        this.propertyDef = 'value'
+    }
+
+    private SimulationClass(String argument) {
+        this.propertyDef = 'value'
+    }
+
+    // Functions
+
+    public void publicVoidFunction() {
+        this.propertyDef = 'value'
+    }
+
+    private void privateVoidFunction() {
+        this.propertyDef = 'value'
+    }
+
+    // Functions as Set/Get
+
+    public void setFakeProperty(String value) {
+        this.privateString = value
+    }
+
+    public String getFakeProperty() {
+        return this.privateString
+    }
+
+    // Functions with term omitted
+
+    public functionWithoutReturn() {
+        return this.propertyDef
+    }
+
+    def functionWithoutScope() {
+        return this.propertyDef
+    }
+
+    // Function static
+
+    static functionStatic() {
+        return 'value'
+    }
+
+    // Function with multiple arguments
+
+    public functionMultipleArguments(String argument1, String argument2) {
+        return 'value'
+    }
+
+    // Function with arguments type omitted
+
+    public functionMultipleArgumentsOmitted(argument1, argument2) {
+        return 'value'
+    }
+
+    // Function with arguments using default value
+
+    public functionArgumentWithDefaultValue(String argument1, String argument2 = 'value') {
+        return 'value'
+    }
+
+    // Function with arguments using default value as object
+
+    public functionArgumentWithDefaultValueAsObject(argument = new Object()) {
+        return 'value'
+    }
 
     // Function with arguments using default value as closure
 
@@ -145,6 +145,17 @@ class SimulationClass {
                             return property
                         }) throws Exception, NullPointerException,
                             IndexOutOfBoundsException {
+
+        'return this last line'
+    }
+
+    static public
+    def functionComplexArguments(String argument1, Object argument2 = new Object(),
+                        int agument3 = 1, argument4 = true,
+                        argumetn5 = { property, subProperty ->
+                            return property + subProperty
+                        }) throws Exception, NullPointerException,
+            IndexOutOfBoundsException {
 
         'return this last line'
     }

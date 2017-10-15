@@ -21,6 +21,7 @@ class ClassStatement {
     List<PropertyStatement> properties
     List<FunctionStatement> functions
     List<ClosureStatement> closures
+    List<StaticScopeStatement> staticScopes
 
     boolean isAbstract
     boolean isInternal
@@ -40,6 +41,7 @@ class ClassStatement {
         this.properties = []
         this.functions = []
         this.closures = []
+        this.staticScopes = []
 
         this.propertiesAsMap = [:]
     }

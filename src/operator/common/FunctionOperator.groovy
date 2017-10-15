@@ -119,4 +119,5 @@ class FunctionOperator extends GenericOperator  {
 
         return true
     }
+
 }
