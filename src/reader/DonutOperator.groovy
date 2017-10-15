@@ -5,6 +5,7 @@ import operator.common.AnnotationOperator
 import operator.common.ClosureOperator
 import operator.common.FunctionOperator
 import operator.common.ImportOperator
+import operator.common.LoadOperator
 import operator.common.PackageOperator
 import operator.common.PropertyOperator
 import operator.domain.HasOneOperator
@@ -43,6 +44,8 @@ class DonutOperator {
         this.propertyOperations.add(new BelongsToOperator())
         this.propertyOperations.add(new HasManyOperator())
         this.propertyOperations.add(new TransientOperator())
+
+        this.propertyOperations.add(new LoadOperator())
         // The most 'generic' operator is the last
         this.propertyOperations.add(new PropertyOperator())
 
@@ -53,6 +56,8 @@ class DonutOperator {
         this.scopeOperations.add(new EnumOperator())
         this.scopeOperations.add(new ConstraintsOperator())
         this.scopeOperations.add(new MappingOperator())
+
+        this.scopeOperations.add(new LoadOperator())
         // The most 'generic' operator is the last
         this.scopeOperations.add(new ClosureOperator())
         this.scopeOperations.add(new FunctionOperator())
@@ -99,14 +104,7 @@ class DonutOperator {
                 genericOperator = findOperator(line, operations)
 
                 if (genericOperator) {
-                    try {
-                        genericOperator.updateStatement(classStatement)
-                    } catch (Exception e) {
-                        e.printStackTrace()
-                        println '??????? ' + line
-
-                    }
-
+                    genericOperator.updateStatement(classStatement)
                 }
             }
 
@@ -124,8 +122,24 @@ class DonutOperator {
             context = lastOperator.lines.join(GenericOperator.join)
 
             if (!lastOperator.needBuffer(context)) {
+                if (lastOperator instanceof LoadOperator) {
+                    lastOperator.reload()
+                    List<String> currentLines = lastOperator.lines
+                    lastOperator = null
+
+                    GenericOperator genericOperator
+                    currentLines.each {
+                        genericOperator = findOperator(it, operations)
+                        if (genericOperator) {
+                            lastOperator = genericOperator
+                        }
+                    }
+
+                }
+
                 operatorFound = lastOperator
                 lastOperator = null
+
             }
 
         } else {

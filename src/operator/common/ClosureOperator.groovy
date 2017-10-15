@@ -16,7 +16,8 @@ class ClosureOperator extends GenericOperator {
 
     void updateStatement(ClassStatement classStatement) {
         List<String> tokens
-        String line = loadScopeDeclaration()
+        String[] result = loadScopeDeclaration()
+        String line = result[0]
 
         ClosureStatement closureStatement = new ClosureStatement()
 
@@ -44,8 +45,8 @@ class ClosureOperator extends GenericOperator {
             closureStatement.isStatic = true
         }
 
-        String arguments = this.lines[0]
-        this.lines.remove(0)
+        String arguments = result[1]
+
         // Expected: 'Object a, Object b ->'
         arguments = arguments.replace('->', '')
 

@@ -20,7 +20,7 @@ class ClassOperator extends GenericOperator  {
         } else {
 
             List<String> tokens
-            String line = loadScopeDeclaration()
+            String line = loadScopeDeclaration()[0]
 
             if (line.contains('implements ')) {
                 tokens = line.split('implements ')

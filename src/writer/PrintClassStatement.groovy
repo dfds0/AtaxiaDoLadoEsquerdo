@@ -34,9 +34,12 @@ class PrintClassStatement {
         }
 
         classStatement.functions.each {
-            println '   -F: ' + it.type + ' ' + it.name + (it.isStatic ? ' (static) ' : '')
+            println '   -F: ' + it.type + ' ' + it.name + (it.isStatic ? ' (static) ' : '') + " (${it.visibility})"
             it.arguments.each { arg ->
                 println '       -- ' + arg.name + ' = ' + arg.defaultValue
+            }
+            it.exceptions.each { exp ->
+                println '       -- EXP: ' + exp
             }
         }
 

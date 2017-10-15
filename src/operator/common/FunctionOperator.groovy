@@ -17,13 +17,14 @@ class FunctionOperator extends GenericOperator  {
     void updateStatement(ClassStatement classStatement) {
         List<String> tokens
 
-        String line = loadScopeDeclaration()
+        String[] result = loadScopeDeclaration()
+        String line = result[0]
 
         FunctionStatement functionStatement = new FunctionStatement()
 
         ['public ', 'private ', 'protected '].each { String token ->
             if (line.contains(token)) {
-                functionStatement.visibility = token
+                functionStatement.visibility = token.trim()
                 line = line.replace(token, '')
             }
         }
@@ -43,22 +44,24 @@ class FunctionOperator extends GenericOperator  {
             functionStatement.isDefault = true
         }
 
-        if (line.contains('throws')) {
-            tokens = line.split('throws ')
-            line = tokens[0]
-            tokens[1].split(',').each {String exception
-                functionStatement.exceptions.add(exception.trim())
+        if (line.contains('final ')) {
+            line = line.replace('final ', '').trim()
+            functionStatement.isFinal = true
+        }
+
+        if (line.contains('transient ')) {
+            line = line.replace('transient ', '').trim()
+            // DO nothing
+        }
+
+        if (result[2] != null && result[2].contains('throws')) {
+            tokens = result[2].split('throws ')
+            tokens[1].split(',').each { String exception ->
+                functionStatement.exceptions.add(exception.replace('{', '').trim())
             }
         }
 
-        // 'def function(arg)' -> 'def function(arg'
-        int lastClose = line.lastIndexOf(')')
-        int firstOpen = line.indexOf('(')
-        String arguments = line.substring(firstOpen + 1, lastClose)
-
-        // 'def function(arg)' -> 'def function'
-        line = line.substring(0, firstOpen)
-
+        String arguments = result[1]
         ArgumentStatement argumentStatement
 
         tokens = splitByComma(arguments)
@@ -91,12 +94,14 @@ class FunctionOperator extends GenericOperator  {
 
     boolean isValid(String line) {
 
-        // Clone the line
-        String closureLine = new String(line)
-        closureLine = closureLine.replaceAll(' ', '')
-        int closureIndex = closureLine.indexOf('{')
+        String compressedLine = LoadOperator.compressLine(line)
 
-        if (closureIndex == -1) {
+        if (!compressedLine.contains('(')) {
+            return false
+        }
+
+        compressedLine = compressedLine.split('\\(', 2)[0]
+        if (compressedLine.contains('new ')) {
             return false
         }
 
@@ -111,10 +116,6 @@ class FunctionOperator extends GenericOperator  {
         // Closure as: 'name(...) {...}' - valid
         // Closure as: 'void name ...' - valid
         // Closure as: 'name ... throws {' - valid
-
-        if ((closureLine.indexOf('(') > closureLine.indexOf('{'))) {
-            return false
-        }
 
         return true
     }
