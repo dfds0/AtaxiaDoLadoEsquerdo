@@ -1,40 +1,40 @@
 # AtaxiaDoLadoEsquerdo
 
+The premise of a 'Stand':
+- In Object-oriented programming, you create a software using real object as reference
+- This means that entity and code build with this paradigm will have the same behavior, restriction, and power of the real object
+- Implicitly, this also means that his creative capacity has the same limits as his 'world'
+- A Stand is a superior version of a real entity, an entity out of know world
 
-Objetivo:
+FAQ:
 
-  A finalidade do projeto e fornecer um leitor e analisador de projeto Grails/Groovy para que se possa criar artefatos baseado na leitura e analise feita.
+ - Q: Is a Stand a 'workaround'  to violate the OOP?
+ - A: It can be, but I don't care. 
 
-O que é um artefato:
+ - Q: Is a Stand a reference to JOJO?
+ - A: Yes
 
-  Qualquer agrupamento que pode ser uma significado/utilidade ao ser utilizado.
+What is AtaxiaDoLadoEsquerdo (Ataxia Do Lado Esquerdo):
+ - Is an application that read Grails/Groovy code, creates DataStatement.
+ - With the Statements, a algorithm will be executed to evaluate what part of code needs tests and create the test for the code selected
+ 
+Condition to change the code:
+ - Except by the name of Stands (and your objective) and the name of solution (Ataxia Do Lado Esquerdo) you can change any code that you needs.
 
-Qual é a estrutura do projeto:
+Condition to use:
+ - Free for use
+ 
+What this solution is able to do?
+ - The solution is able to read a great variation of code in Groovy with framework Grails
+ - Create 'Statements' related with the code read to be used in meta-programing
+ - Create test using the Statements as reference
 
-  runners/executores - Tem o objetivo de gerenciar operações de leitura e escrita de artefatos.
-  
-  readers/leitores - Tem o objetivo de traduzir codigos lido em statements/declarações.
-  
-  operators/operatores - Tem o objetivo de identificar estruturas de codigo.
-  
-  statements/declarações - Tem o objetivo de representar uma estrutura de codigo.
-  
-  writers/escritores - Tem o objetivo de criar novos artefatos.
-  
-  stands - Representa qualquer entidades que não possa ser representada por paradigmas de programação.
+What this solution is not able to do? 
+ - Evaluate the quality of your application
+ - Read code in other language and create 'Statements'
+ - Read 100% of an application in Groovy/Java
 
-O que faz agora:
-
-  Leitura de codigo Grails/Groovy
-  
-  Identificação de 80% dos operatores declarados
-  
-  Identificação de 70& das declarações definidas
-
-O que precisa ser feito:
-
-  100% de identificação dos operatores declarados
-  
-  100% de tradução das declarações definidas
-  
--- 
+Recommendation:
+- Check if the test created is useful for your application
+- Create new 'test writer' for your application
+- Use the statements to check the 'custom' patterns is not used 
