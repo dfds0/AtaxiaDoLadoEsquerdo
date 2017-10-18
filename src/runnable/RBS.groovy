@@ -11,7 +11,7 @@ class RBS extends AbstractRunner {
 
         abstractReader = new GroovyReader()
 
-        File folder = new File('/Users/diegio/Documents/Pollux  & Castor/AtaxiaDoLadoEsquerdo - RBS/src/simulation/beats/SimulationClassBeats1.groovy')
+        File folder = new File('')
 
         explore(folder)
         folder.listFiles().each {

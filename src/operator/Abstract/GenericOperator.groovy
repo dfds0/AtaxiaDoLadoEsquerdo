@@ -69,9 +69,10 @@ abstract class GenericOperator {
             String lastChar = ''
             String currentChar
             int counter
+
             for (int index = 0; index < charArray.length; index++) {
 
-                currentChar = charArray[index]
+                currentChar = charArray[index].toString()
 
                 if (tokens.containsKey(currentChar)) {
 
@@ -97,7 +98,17 @@ abstract class GenericOperator {
                     }
                 }
 
-                if (tokens.get('(') == tokens.get(')') && (tokens.get('{') == (tokens.get('}')+1)) &&
+                // Abstract function do not use "{}"
+                boolean testOfScope
+                if (line.contains('abstract ') && indexOfFirstOpenFunction != -1 && indexOfFirstOpenFunction != -1 &&
+                        !line.contains('{') && !line.contains('}')) {
+
+                    testOfScope = true
+                } else {
+                    testOfScope = (tokens.get('{') == (tokens.get('}')+1))
+                }
+
+                if (tokens.get('(') == tokens.get(')') && testOfScope &&
                         tokens.get('[') == tokens.get(']') && tokens.get('<') == tokens.get('>')) {
                     match = true
                     break
@@ -124,9 +135,7 @@ abstract class GenericOperator {
             }
         }
 
-        for (int number = 0; number < linesToRemove; number ++) {
-            this.lines.remove(number)
-        }
+        this.lines = this.lines.subList(linesToRemove, this.lines.size())
 
         // Remove the last '}'
         if (!this.lines.empty) {
@@ -145,15 +154,6 @@ abstract class GenericOperator {
             }
 
         }
-
-//        // Preserve the closure declaration
-//        List<String> tokens = line.split('\\{', 2)
-//        if (!tokens.last().trim().empty) {
-//            this.lines.add(0, tokens.last().trim())
-//            line = tokens[0].trim()
-//        } else {
-//            line = line.replace('{', '')
-//        }
 
         return result
     }

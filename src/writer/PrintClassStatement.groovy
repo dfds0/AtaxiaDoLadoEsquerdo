@@ -1,6 +1,7 @@
 package writer
 
 import statement.ClassStatement
+import statement.StaticScopeStatement
 
 /**
  * Created by dfds on 10/8/17.
@@ -30,7 +31,8 @@ class PrintClassStatement {
 
         classStatement.properties.each {
             println '   ' + it.type + ' ' + it.name + (it.isBelongsTo ? ' (BelongsTo) ' : '') +
-                    (it.isHasMany ? ' (HasMany) ' : '') + (it.isHasOne ? ' (HasOne) ' : '') + (it.isTransient ? ' (Transient) ' : '')
+                    (it.isHasMany ? ' (HasMany) ' : '') + (it.isHasOne ? ' (HasOne) ' : '') +
+                    (it.isTransient ? ' (Transient) ' : '') +  ' = ' + it.defaultValue + " (${it.visibility})"
         }
 
         classStatement.functions.each {
@@ -49,6 +51,10 @@ class PrintClassStatement {
             } else {
                 println '   -C: ' + it.type + ' ' + it.name
             }
+        }
+
+        classStatement.staticScopes.eachCombination { StaticScopeStatement staticScopeStatement ->
+            println '   -SSS: ' + staticScopeStatement.content.substring(0, 6)
         }
 
         println ''

@@ -8,6 +8,7 @@ import operator.common.ImportOperator
 import operator.common.LoadOperator
 import operator.common.PackageOperator
 import operator.common.PropertyOperator
+import operator.common.StaticScopeOperator
 import operator.domain.HasOneOperator
 import operator.domain.TransientOperator
 import operator.file.CommentOperator
@@ -58,6 +59,8 @@ class DonutOperator {
         this.scopeOperations.add(new MappingOperator())
 
         this.scopeOperations.add(new LoadOperator())
+        this.scopeOperations.add(new StaticScopeOperator())
+
         // The most 'generic' operator is the last
         this.scopeOperations.add(new ClosureOperator())
         this.scopeOperations.add(new FunctionOperator())
