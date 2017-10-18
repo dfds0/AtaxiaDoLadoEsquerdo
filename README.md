@@ -1,19 +1,5 @@
 # AtaxiaDoLadoEsquerdo
 
-The premise of a 'Stand':
-- In Object-oriented programming, you create a software using real object as reference
-- This means that entity and code build with this paradigm will have the same behavior, restriction, and power of the real object
-- Implicitly, this also means that his creative capacity has the same limits as his 'world'
-- A Stand is a superior version of a real entity, an entity out of know world
-
-FAQ:
-
- - Q: Is a Stand a 'workaround'  to violate the OOP?
- - A: It can be, but I don't care. 
-
- - Q: Is a Stand a reference to JOJO?
- - A: Yes
-
 What is AtaxiaDoLadoEsquerdo (Ataxia Do Lado Esquerdo):
  - Is an application that read Grails/Groovy code, creates DataStatement.
  - With the Statements, a algorithm will be executed to evaluate what part of code needs tests and create the test for the code selected
@@ -38,3 +24,19 @@ Recommendation:
 - Check if the test created is useful for your application
 - Create new 'test writer' for your application
 - Use the statements to check the 'custom' patterns is not used 
+
+----------
+
+The premise of a 'Stand':
+- In Object-oriented programming, you create a software using real object as reference
+- This means that entity and code build with this paradigm will have the same behavior, restriction, and power of the real object
+- Implicitly, this also means that his creative capacity has the same limits as his 'world'
+- A Stand is a superior version of a real entity, an entity out of know world
+
+FAQ:
+
+ - Q: Is a Stand a 'workaround'  to violate the OOP?
+ - A: It can be, but I don't care. 
+
+ - Q: Is a Stand a reference to JOJO?
+ - A: Yes
