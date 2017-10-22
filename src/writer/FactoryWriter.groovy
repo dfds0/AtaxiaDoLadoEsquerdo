@@ -12,18 +12,57 @@ class FactoryWriter extends AbstractWriter {
     public String writeBuildFunction(ClassStatement classStatement) {
         riotBuilder()
 
-        append "public ${classStatement.name.capitalize()} build${classStatement.name.capitalize()}() {"
+        append '/**'
+        append "* Build a new instance of class ${classStatement.name} using the basic properties"
+        append '* @param dependencies - Define initial value of some properties'
+        append "* @return New instance of class ${classStatement.name}"
+        append '*/'
+        append "public ${classStatement.name.capitalize()} build${classStatement.name.capitalize()}(Map dependencies = [:]) {"
         append "    ${classStatement.name} ${classStatement.instanceName} = new ${classStatement.name}()"
 
         classStatement.properties.each {
 
-            if (it.isBlank || it.isNullable || it.isTransient || it.isStatic) {
+            if (it.isBlank || it.isNullable || it.isTransient || it.isStatic || it.isBelongsTo || it.isHasOne || it.isHasMany) {
                 // Do nothing
 
             } else {
                 append "    ${classStatement.instanceName}.${it.name} = ${getInitialValue(it)}"
             }
 
+        }
+
+        if (!classStatement.propertiesBelongsTo.empty || !classStatement.propertiesHasOne.empty) {
+            append ''
+            append '    // Define the map of dependencies to be propagate'
+            append "    Map propagation = ['${classStatement.name}': ${classStatement.instanceName}]"
+        }
+
+        if (!classStatement.propertiesBelongsTo.empty) {
+            append ''
+            append '    // Load dependencies (belongsTo)'
+            classStatement.propertiesBelongsTo.each {
+                append "    ${classStatement.instanceName}.${it.name} = dependencies['${it.type}'] ?: build${it.type}(propagation)"
+            }
+        }
+
+        if (!classStatement.propertiesHasOne.empty) {
+            append ''
+            append '    // Load dependencies (hasOne)'
+            classStatement.propertiesHasOne.each {
+                // instanceName.propertyHasOne = buildClassOfPropertyHasOne( ['ClassOfInstanceName' : instanceName])
+                append "    ${classStatement.instanceName}.${it.name} = build${it.type}(propagation)"
+            }
+        }
+
+        if (!classStatement.propertiesHasMany.empty) {
+            append ''
+            append '    // Load dependencies (hasMany)'
+            classStatement.propertiesHasMany.each {
+                // it.name = 'abcdefgH' -> it.name[0..-2] -> 'abcdefg'
+                append "    ${it.type} ${it.name[0..-2]} = build${it.type}()"
+                append "    ${classStatement.instanceName}.addTo${it.type}s(${it.name})"
+                append ''
+            }
         }
 
         append ''

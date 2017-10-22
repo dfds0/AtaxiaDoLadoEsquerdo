@@ -130,4 +130,7 @@ class PropertyStatement {
         return this.name == 'grailsApplication'
     }
 
+    public void setType(String type) {
+        this.type = type.trim()
+    }
 }

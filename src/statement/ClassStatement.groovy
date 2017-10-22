@@ -68,7 +68,7 @@ class ClassStatement {
      * @return String value that represent the instance name of class
      */
     public String getInstanceName() {
-        return name[0]?.toLowerCase() + name[1..-1]
+        return (name[0]?.toLowerCase() + name[1..-1]).trim()
     }
 
     /**
@@ -96,4 +96,19 @@ class ClassStatement {
         return mainProperty
     }
 
+    public List<PropertyStatement> getPropertiesBelongsTo() {
+        return this.properties.findAll { it.isBelongsTo}
+    }
+
+    public List<PropertyStatement> getPropertiesHasOne() {
+        return this.properties.findAll { it.isHasOne }
+    }
+
+    public List<PropertyStatement> getPropertiesHasMany() {
+        return this.properties.findAll { it.isHasMany }
+    }
+
+    public void setName(String name) {
+        this.name = name.trim()
+    }
 }
