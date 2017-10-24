@@ -23,7 +23,7 @@ class FunctionOperator extends GenericOperator  {
         FunctionStatement functionStatement = new FunctionStatement()
 
         ['public ', 'private ', 'protected '].each { String token ->
-            if (line.contains(token)) {
+            if (line?.contains(token)) {
                 functionStatement.visibility = token.trim()
                 line = line.replace(token, '')
             }
