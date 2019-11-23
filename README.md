@@ -35,8 +35,5 @@ The premise of a 'Stand':
 
 FAQ:
 
- - Q: Is a Stand a 'workaround'  to violate the OOP?
- - A: It can be, but I don't care. 
-
  - Q: Is a Stand a reference to JOJO?
  - A: Yes
